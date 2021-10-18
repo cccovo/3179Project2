@@ -1,0 +1,68 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/cccovo/3179_testrepo/main/EMDAT_1900-2021_NatDis.csv"
+  },
+  "vconcat": [
+    {
+      "width":700,
+      "height":60,
+      "mark":"line",
+      "title":{
+        "text": "Top 5 Natural Disasters per year | 1900-2020",
+        "fontSize":15
+      },
+      "params": [
+        {
+          "name": "time_brush",
+          "select": {"type": "interval", "encodings": ["x"]}
+        }
+      ],
+      "encoding": {
+        "x": {
+            "field": "Year",
+            "timeUnit": "year",
+            "axis": {"title": "", "grid": false}
+        },
+        "y": {"aggregate": "count", "title": "Count","axis": {"grid": false}}
+      }
+    },
+    {
+      "width": 700,
+      "height": 300,
+      "mark": "area",
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "timeUnit": "year",
+          "scale": {"domain": {"param": "time_brush"}},
+          "axis": {"title": "", "grid": false}
+        },
+        "y": {"aggregate": "count", "title": "Count","axis": {"grid": false}},
+        "color": {
+          "field": "Disaster Type",
+          "type": "nominal",
+          "scale":{
+            "domain":[
+                "Earthquake",
+                "Epidemic",
+                "Flood",
+                "Landslide",
+                "Storm"
+            ],
+            "range":[
+                "#6F95A8",
+                "#AEDCB9",
+                "#F1B19D",
+                "#F38388",
+                "#C5BEB1" 
+            ]
+          }
+        },
+        "tooltip":[
+            {"field":"Disaster Type", "type": "nominal"}
+        ]
+      }
+    }
+  ]
+}
